@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Head content -->
+</head>
+<body>
+    <h1>Chat with {{ other_user }}</h1>
+    <h2>Your Username: {{ username }}</h2> <!-- Display the username -->
+    <div id="chat-messages">
+        <!-- Messages will be displayed here -->
+    </div>
+    <form id="message-form">
+        <input type="text" id="message-input">
+        <button type="submit">Send</button>
+    </form>
+
+    <!-- JavaScript content -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+    <script>
+        // JavaScript code for sending and displaying messages via WebSocket
+        const socket = io();
+
+        // Function to display a message in the chat interface
+        function displayMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = `${sender}: ${message}`;
+            messageDiv.classList.add('message');
+            document.getElementById('chat-messages').appendChild(messageDiv);
+            document.getElementById('chat-messages').scrollTop = document.getElementById('chat-messages').scrollHeight;
+        }
+
+        // Event listener for receiving messages from the server
+        socket.on('message', function(data) {
+            const message = data.content;
+            const sender = data.sender;
+            displayMessage(message, sender);
+        });
+
+        // Event listener for the message form submission
+        document.getElementById('message-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const messageInput = document.getElementById('message-input').value;
+            const room_id = '{{ room_id }}'; // Get the room ID from the template
+            if (messageInput.trim() !== '' && socket.connected) {
+                // Send the message along with the room ID
+                socket.send({ content: messageInput, room_id: room_id });
+                document.getElementById('message-input').value = '';
+            } else {
+                // Handle the case where the socket connection is not established or the message input is empty
+                console.error('Socket connection not established or message input is empty.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        .user-card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .user-link {
+            color: blue;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{ username }}</h1>
+    <h2>Registered Users:</h2>
+    <div>
+        {% for user in registered_users %}
+            <div class="user-card">
+                <a href="/chat/{{ user }}" class="user-link">{{ user }}</a>
+            </div>
+        {% endfor %}
+    </div>
+    <p><a href="/logout">Logout</a></p>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+</head>
+<body style="font-family: Arial, sans-serif; text-align: center;">
+    <h1>Signup</h1>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form action="/signup" method="post">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" style="margin-bottom: 10px;"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" style="margin-bottom: 10px;"><br><br>
+        <input type="submit" value="Signup" style="padding: 5px 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+    </form>
+</body>
+</html>
